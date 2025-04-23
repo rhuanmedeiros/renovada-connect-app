@@ -18,7 +18,7 @@ export const BottomNav = () => {
   ];
   
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 h-16 flex items-center justify-around z-10 shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
+    <nav className="fixed bottom-0 left-0 right-0 bg-blue-500 text-white h-16 flex items-center justify-around z-10 shadow-[0_-4px_10px_rgba(0,0,0,0.1)]">
       {navItems.map((item) => {
         const active = isActive(item.path);
         return (
@@ -26,10 +26,10 @@ export const BottomNav = () => {
             key={item.path}
             to={item.path}
             className={`flex flex-col items-center justify-center w-1/5 h-full ${
-              active ? 'text-church-600' : 'text-gray-500'
+              active ? 'bg-blue-600' : ''
             }`}
           >
-            <item.icon size={20} className={active ? 'text-church-600' : 'text-gray-500'} />
+            <item.icon size={20} className="text-white" />
             <span className={`text-xs mt-1 ${active ? 'font-medium' : ''}`}>
               {item.label}
             </span>

@@ -58,14 +58,17 @@ export const Header = () => {
   return (
     <header 
       className={cn(
-        "sticky top-0 z-30 w-full transition-all duration-300",
-        isScrolled ? "bg-white/95 backdrop-blur-sm shadow-sm" : "bg-transparent"
+        "sticky top-0 z-30 w-full transition-all duration-300 bg-blue-500/95 text-white",
+        isScrolled ? "backdrop-blur-sm shadow-sm" : "bg-transparent"
       )}
     >
       <div className="container flex h-16 items-center justify-between">
-        <div className="flex items-center gap-2" onClick={handleLogoPress}>
+        <div 
+          className="flex items-center gap-2 cursor-pointer" 
+          onClick={handleLogoPress}
+        >
           <div 
-            className="h-8 w-8 rounded-full bg-gradient-to-br from-church-400 to-church-700 flex items-center justify-center text-white font-bold"
+            className="h-8 w-8 rounded-full bg-white/20 flex items-center justify-center text-white font-bold"
           >
             R
           </div>
@@ -75,7 +78,7 @@ export const Header = () => {
         {isAdminAuthenticated && (
           <div className="flex items-center gap-2">
             {location.pathname !== '/admin' && (
-              <Button variant="ghost" size="sm" asChild>
+              <Button variant="ghost" size="sm" asChild className="text-white hover:bg-blue-600/20">
                 <Link to="/admin">
                   <Settings size={18} className="mr-1" />
                   Admin
@@ -83,7 +86,7 @@ export const Header = () => {
               </Button>
             )}
             {location.pathname === '/admin' && (
-              <Button variant="outline" size="sm" onClick={logout}>
+              <Button variant="outline" size="sm" onClick={logout} className="text-white border-white/30 hover:bg-white/10">
                 Sair
               </Button>
             )}
