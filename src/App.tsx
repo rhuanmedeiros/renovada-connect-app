@@ -22,40 +22,44 @@ import Contato from "./pages/Contato";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
 
+// Create a new QueryClient instance
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <AdminProvider>
-      <AppDataProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <div className="flex flex-col min-h-screen">
-              <Header />
-              <main className="flex-1">
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/agenda" element={<Agenda />} />
-                  <Route path="/devocional" element={<Devocional />} />
-                  <Route path="/midia" element={<Midia />} />
-                  <Route path="/oracao" element={<Oracao />} />
-                  <Route path="/contribuicoes" element={<Contribuicoes />} />
-                  <Route path="/familia" element={<Familia />} />
-                  <Route path="/contato" element={<Contato />} />
-                  <Route path="/admin" element={<Admin />} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              </main>
-              <BottomNav />
-              <AdminAuthModal />
-            </div>
-          </BrowserRouter>
-        </TooltipProvider>
-      </AppDataProvider>
-    </AdminProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  return (
+    <BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <AdminProvider>
+          <AppDataProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <div className="flex flex-col min-h-screen">
+                <Header />
+                <main className="flex-1">
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/agenda" element={<Agenda />} />
+                    <Route path="/devocional" element={<Devocional />} />
+                    <Route path="/midia" element={<Midia />} />
+                    <Route path="/oracao" element={<Oracao />} />
+                    <Route path="/contribuicoes" element={<Contribuicoes />} />
+                    <Route path="/familia" element={<Familia />} />
+                    <Route path="/contato" element={<Contato />} />
+                    <Route path="/admin" element={<Admin />} />
+                    <Route path="*" element={<NotFound />} />
+                  </Routes>
+                </main>
+                <BottomNav />
+                <AdminAuthModal />
+              </div>
+            </TooltipProvider>
+          </AppDataProvider>
+        </AdminProvider>
+      </QueryClientProvider>
+    </BrowserRouter>
+  );
+};
 
 export default App;
