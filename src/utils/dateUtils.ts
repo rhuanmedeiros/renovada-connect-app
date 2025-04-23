@@ -16,4 +16,3 @@ export const formatDateTimePtBr = (dateStr: string): string => {
   const date = parseISO(dateStr);
   return format(date, "dd 'de' MMMM, HH:mm", { locale: ptBR });
 };
-

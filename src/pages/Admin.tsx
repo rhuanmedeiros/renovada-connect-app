@@ -61,7 +61,10 @@ const Admin = () => {
   });
   
   function onVerseSubmit(values: z.infer<typeof verseFormSchema>) {
-    updateDailyVerse(values);
+    updateDailyVerse({
+      text: values.text,
+      reference: values.reference
+    });
     toast({
       title: "Versículo atualizado",
       description: "O versículo do dia foi atualizado com sucesso.",
@@ -111,7 +114,11 @@ const Admin = () => {
   });
   
   function onEventSubmit(values: z.infer<typeof eventFormSchema>) {
-    addEvent(values);
+    addEvent({
+      title: values.title,
+      date: values.date,
+      description: values.description
+    });
     eventForm.reset();
     toast({
       title: "Evento adicionado",
@@ -140,7 +147,13 @@ const Admin = () => {
   });
   
   function onDevotionalSubmit(values: z.infer<typeof devotionalFormSchema>) {
-    addDevotional(values);
+    addDevotional({
+      title: values.title,
+      verse: values.verse,
+      reference: values.reference,
+      content: values.content,
+      date: values.date
+    });
     devotionalForm.reset();
     toast({
       title: "Devocional adicionado",
@@ -163,7 +176,10 @@ const Admin = () => {
   });
   
   function onTestimonySubmit(values: z.infer<typeof testimonyFormSchema>) {
-    addTestimony(values);
+    addTestimony({
+      content: values.content,
+      author: values.author
+    });
     testimonyForm.reset();
     toast({
       title: "Testemunho adicionado",
@@ -186,7 +202,10 @@ const Admin = () => {
   });
   
   function onPhotoSubmit(values: z.infer<typeof photoFormSchema>) {
-    addPhoto(values);
+    addPhoto({
+      url: values.url,
+      alt: values.alt
+    });
     photoForm.reset();
     toast({
       title: "Foto adicionada",
@@ -210,7 +229,6 @@ const Admin = () => {
   
   function onVideoMediaSubmit(values: z.infer<typeof videoMediaFormSchema>) {
     addVideo({
-      id: values.id,
       title: values.title,
       thumbnail: `https://img.youtube.com/vi/${values.id}/hqdefault.jpg`,
     });
@@ -242,7 +260,12 @@ const Admin = () => {
   });
   
   function onKidsContentSubmit(values: z.infer<typeof kidsContentSchema>) {
-    addKidsContent(values);
+    addKidsContent({
+      title: values.title,
+      type: values.type,
+      url: values.url,
+      thumbnail: values.thumbnail
+    });
     kidsContentForm.reset();
     toast({
       title: "Conteúdo infantil adicionado",
@@ -275,7 +298,14 @@ const Admin = () => {
   });
   
   function onYouthContentSubmit(values: z.infer<typeof youthContentSchema>) {
-    addYouthContent(values);
+    addYouthContent({
+      title: values.title,
+      type: values.type,
+      url: values.url,
+      content: values.content,
+      verse: values.verse,
+      thumbnail: values.thumbnail
+    });
     youthContentForm.reset();
     toast({
       title: "Conteúdo para jovens adicionado",
