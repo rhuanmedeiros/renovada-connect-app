@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -40,13 +39,11 @@ const Admin = () => {
   const { data, updateDailyVerse, updateFeaturedVideo, addEvent, addDevotional, addTestimony, addPhoto, addVideo, addKidsContent, addYouthContent, updatePixKey } = useAppData();
   const { toast } = useToast();
   
-  // Ensure admin authentication
   if (!isAdminAuthenticated) {
     navigate('/');
     return null;
   }
   
-  // Daily Verse Form
   const verseFormSchema = z.object({
     text: z.string().min(2, "O texto do versículo é obrigatório"),
     reference: z.string().min(2, "A referência do versículo é obrigatória"),
@@ -71,7 +68,6 @@ const Admin = () => {
     });
   }
   
-  // Featured Video Form
   const videoFormSchema = z.object({
     id: z.string().min(2, "O ID do vídeo é obrigatório"),
     title: z.string().min(2, "O título do vídeo é obrigatório"),
@@ -97,7 +93,6 @@ const Admin = () => {
     });
   }
   
-  // Event Form
   const eventFormSchema = z.object({
     title: z.string().min(2, "O título é obrigatório"),
     date: z.string().min(2, "A data é obrigatória"),
@@ -126,7 +121,6 @@ const Admin = () => {
     });
   }
   
-  // Devotional Form
   const devotionalFormSchema = z.object({
     title: z.string().min(2, "O título é obrigatório"),
     verse: z.string().min(2, "O versículo é obrigatório"),
@@ -161,7 +155,6 @@ const Admin = () => {
     });
   }
   
-  // Testimony Form
   const testimonyFormSchema = z.object({
     content: z.string().min(2, "O conteúdo do testemunho é obrigatório"),
     author: z.string().min(2, "O autor do testemunho é obrigatório"),
@@ -187,7 +180,6 @@ const Admin = () => {
     });
   }
   
-  // Photo Form
   const photoFormSchema = z.object({
     url: z.string().min(2, "A URL da foto é obrigatória"),
     alt: z.string().min(2, "A descrição da foto é obrigatória"),
@@ -213,7 +205,6 @@ const Admin = () => {
     });
   }
   
-  // Video Media Form
   const videoMediaFormSchema = z.object({
     id: z.string().min(2, "O ID do vídeo é obrigatório"),
     title: z.string().min(2, "O título do vídeo é obrigatório"),
@@ -239,7 +230,6 @@ const Admin = () => {
     });
   }
   
-  // Kids Content Form
   const kidsContentSchema = z.object({
     title: z.string().min(2, "O título do conteúdo é obrigatório"),
     type: z.enum(["video", "pdf", "story"], {
@@ -273,7 +263,6 @@ const Admin = () => {
     });
   }
   
-  // Youth Content Form
   const youthContentSchema = z.object({
     title: z.string().min(2, "O título do conteúdo é obrigatório"),
     type: z.enum(["video", "devotional"], {
@@ -313,7 +302,6 @@ const Admin = () => {
     });
   }
   
-  // PIX Key Form
   const pixKeyFormSchema = z.object({
     pixKey: z.string().min(2, "A chave PIX é obrigatória"),
   });
@@ -333,6 +321,25 @@ const Admin = () => {
     });
   }
 
+  const formSchema = z.object({
+    title: z.string().min(2, "O título da série é obrigatório"),
+    description: z.string().min(2, "A descrição é obrigatória"),
+    coverImage: z.string().min(2, "A URL da imagem de capa é obrigatória"),
+  });
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: "",
+      description: "",
+      coverImage: "",
+    },
+  });
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    // Add logic to handle series form submission
+  }
+
   return (
     <div className="page-container max-w-5xl space-y-6 animate-fade-in">
       <div className="flex items-center justify-between mb-6">
@@ -350,9 +357,7 @@ const Admin = () => {
           <TabsTrigger value="settings">Configurações</TabsTrigger>
         </TabsList>
         
-        {/* HOME TAB */}
         <TabsContent value="home" className="space-y-6">
-          {/* Daily Verse Form */}
           <Card>
             <CardHeader>
               <CardTitle>Versículo do Dia</CardTitle>
@@ -397,7 +402,6 @@ const Admin = () => {
             </CardContent>
           </Card>
           
-          {/* Featured Video Form */}
           <Card>
             <CardHeader>
               <CardTitle>Vídeo em Destaque</CardTitle>
@@ -443,9 +447,71 @@ const Admin = () => {
           </Card>
         </TabsContent>
         
-        {/* CONTENT TAB */}
         <TabsContent value="content" className="space-y-6">
-          {/* Event Form */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Adicionar Série</CardTitle>
+              <CardDescription>
+                Adicione uma nova série de mensagens.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                  <FormField
+                    control={form.control}
+                    name="title"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Título da Série</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Título da série" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="description"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Descrição</FormLabel>
+                        <FormControl>
+                          <Textarea 
+                            placeholder="Breve descrição da série"
+                            className="min-h-[80px]"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <FormField
+                    control={form.control}
+                    name="coverImage"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>URL da Imagem de Capa</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Link para a imagem de capa" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <Button type="submit">
+                    <PlusCircle className="mr-2 h-4 w-4" /> Adicionar Série
+                  </Button>
+                </form>
+              </Form>
+            </CardContent>
+          </Card>
+          
           <Card>
             <CardHeader>
               <CardTitle>Adicionar Evento</CardTitle>
@@ -506,7 +572,6 @@ const Admin = () => {
             </CardContent>
           </Card>
           
-          {/* Devotional Form */}
           <Card>
             <CardHeader>
               <CardTitle>Adicionar Devocional</CardTitle>
@@ -599,7 +664,6 @@ const Admin = () => {
             </CardContent>
           </Card>
           
-          {/* Testimony Form */}
           <Card>
             <CardHeader>
               <CardTitle>Adicionar Testemunho</CardTitle>
@@ -650,9 +714,7 @@ const Admin = () => {
             </CardContent>
           </Card>
           
-          {/* Family Content Forms */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Kids Content Form */}
             <Card>
               <CardHeader>
                 <CardTitle>Adicionar Conteúdo Infantil</CardTitle>
@@ -734,7 +796,6 @@ const Admin = () => {
               </CardContent>
             </Card>
             
-            {/* Youth Content Form */}
             <Card>
               <CardHeader>
                 <CardTitle>Adicionar Conteúdo para Jovens</CardTitle>
@@ -853,10 +914,8 @@ const Admin = () => {
           </div>
         </TabsContent>
         
-        {/* MEDIA TAB */}
         <TabsContent value="media" className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Photo Form */}
             <Card>
               <CardHeader>
                 <CardTitle>Adicionar Foto</CardTitle>
@@ -903,7 +962,6 @@ const Admin = () => {
               </CardContent>
             </Card>
             
-            {/* Video Media Form */}
             <Card>
               <CardHeader>
                 <CardTitle>Adicionar Vídeo</CardTitle>
@@ -952,9 +1010,7 @@ const Admin = () => {
           </div>
         </TabsContent>
         
-        {/* SETTINGS TAB */}
         <TabsContent value="settings" className="space-y-6">
-          {/* PIX Key Form */}
           <Card>
             <CardHeader>
               <CardTitle>Chave PIX</CardTitle>

@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 type Event = {
@@ -53,6 +52,21 @@ type YouthContent = {
   thumbnail?: string;
 };
 
+type SeriesVideo = {
+  id: string;
+  title: string;
+  youtubeId: string;
+  notes?: string;
+};
+
+type Series = {
+  id: string;
+  title: string;
+  description: string;
+  coverImage: string;
+  videos: SeriesVideo[];
+};
+
 type AppData = {
   dailyVerse: {
     text: string;
@@ -66,6 +80,7 @@ type AppData = {
   testimonies: Testimony[];
   kidsContent: KidsContent[];
   youthContent: YouthContent[];
+  series: Series[];
   pixKey: string;
 };
 
@@ -80,6 +95,9 @@ type AppDataContextType = {
   addVideo: (video: Omit<VideoInfo, 'id'>) => void;
   addKidsContent: (content: Omit<KidsContent, 'id'>) => void;
   addYouthContent: (content: Omit<YouthContent, 'id'>) => void;
+  addSeries: (series: Omit<Series, 'id'>) => void;
+  addVideoToSeries: (seriesId: string, video: Omit<SeriesVideo, 'id'>) => void;
+  updateSeriesNotes: (seriesId: string, videoId: string, notes: string) => void;
   updatePixKey: (key: string) => void;
 };
 
@@ -208,6 +226,22 @@ const sampleData: AppData = {
       thumbnail: "https://images.unsplash.com/photo-1526218626217-dc65a29bb444?q=80&w=2787&auto=format&fit=crop",
     },
   ],
+  series: [
+    {
+      id: "s1",
+      title: "Fundamentos da Fé",
+      description: "Uma série sobre os princípios fundamentais da nossa fé.",
+      coverImage: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9",
+      videos: [
+        {
+          id: "v1",
+          title: "A Importância da Oração",
+          youtubeId: "sample123",
+          notes: "Anotações sobre oração...",
+        },
+      ],
+    },
+  ],
   pixKey: "igreja@renovada.org",
 };
 
@@ -216,7 +250,6 @@ const AppDataContext = createContext<AppDataContextType | undefined>(undefined);
 export const AppDataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [data, setData] = useState<AppData>(sampleData);
 
-  // Initialize from localStorage if available
   useEffect(() => {
     const savedData = localStorage.getItem('churchAppData');
     if (savedData) {
@@ -228,7 +261,6 @@ export const AppDataProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
   }, []);
 
-  // Save changes to localStorage
   useEffect(() => {
     localStorage.setItem('churchAppData', JSON.stringify(data));
   }, [data]);
@@ -324,6 +356,50 @@ export const AppDataProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }));
   };
 
+  const addSeries = (series: Omit<Series, 'id'>) => {
+    const newSeries = {
+      ...series,
+      id: `series-${Date.now()}`,
+    };
+    setData(prev => ({
+      ...prev,
+      series: [newSeries, ...prev.series],
+    }));
+  };
+
+  const addVideoToSeries = (seriesId: string, video: Omit<SeriesVideo, 'id'>) => {
+    const newVideo = {
+      ...video,
+      id: `video-${Date.now()}`,
+    };
+    setData(prev => ({
+      ...prev,
+      series: prev.series.map(s => 
+        s.id === seriesId 
+          ? { ...s, videos: [...s.videos, newVideo] }
+          : s
+      ),
+    }));
+  };
+
+  const updateSeriesNotes = (seriesId: string, videoId: string, notes: string) => {
+    setData(prev => ({
+      ...prev,
+      series: prev.series.map(s => 
+        s.id === seriesId 
+          ? {
+              ...s,
+              videos: s.videos.map(v => 
+                v.id === videoId 
+                  ? { ...v, notes }
+                  : v
+              ),
+            }
+          : s
+      ),
+    }));
+  };
+
   const updatePixKey = (key: string) => {
     setData(prev => ({
       ...prev,
@@ -344,6 +420,9 @@ export const AppDataProvider: React.FC<{ children: React.ReactNode }> = ({ child
         addVideo,
         addKidsContent,
         addYouthContent,
+        addSeries,
+        addVideoToSeries,
+        updateSeriesNotes,
         updatePixKey,
       }}
     >
