@@ -35,6 +35,7 @@ export const AddSeriesForm = () => {
       title: values.title,
       description: values.description,
       coverImage: values.coverImage,
+      videos: [], // Add this empty videos array to fix the type error
     });
     form.reset();
     toast({
