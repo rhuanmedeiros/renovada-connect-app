@@ -36,7 +36,7 @@ const Home = () => {
         <p className="text-zinc-200">Transformando vidas através da Palavra</p>
       </div>
       
-      <div className="bible-verse bg-blue-100 border-blue-500 text-blue-900">
+      <div className="bible-verse border-blue-500 text-blue-900 bg-slate-50">
         <p className="mb-2">{data.dailyVerse.text}</p>
         <p className="text-right text-sm font-medium">{data.dailyVerse.reference}</p>
       </div>
@@ -73,7 +73,7 @@ const Home = () => {
         </div>
         
         {data.events.slice(0, 2).map(event => <Card key={event.id} className="card-hover bg-blue-100">
-            <CardContent className="p-4">
+            <CardContent className="p-4 bg-gray-50">
               <div className="text-sm text-blue-700 font-medium">
                 {new Date(event.date).toLocaleDateString('pt-BR', {
               day: 'numeric',
@@ -96,7 +96,7 @@ const Home = () => {
         </div>
         
         {data.devotionals.slice(0, 1).map(devotional => <Card key={devotional.id} className="card-hover bg-blue-100">
-            <CardContent className="p-4">
+            <CardContent className="p-4 bg-gray-50">
               <h3 className="font-medium text-blue-900">{devotional.title}</h3>
               <p className="text-sm italic mt-1 text-blue-700">"{devotional.verse}"</p>
               <p className="text-xs text-right mt-1 text-blue-600">{devotional.reference}</p>
