@@ -5,38 +5,6 @@
 
 @layer base {
   :root {
-    --background: 213 100% 98%;
-    --foreground: 213 50% 15%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 213 50% 15%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 213 50% 15%;
-
-    --primary: 213 100% 50%;
-    --primary-foreground: 0 0% 98%;
-
-    --secondary: 213 30% 96%;
-    --secondary-foreground: 213 50% 15%;
-
-    --muted: 213 30% 96%;
-    --muted-foreground: 213 20% 45%;
-
-    --accent: 213 50% 96%;
-    --accent-foreground: 213 50% 15%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 213 30% 92%;
-    --input: 213 30% 92%;
-    --ring: 213 100% 50%;
-
-    --radius: 0.5rem;
-  }
-
-  .dark {
     --background: 213 50% 8%;
     --foreground: 0 0% 95%;
 
@@ -46,8 +14,8 @@
     --popover: 213 50% 12%;
     --popover-foreground: 0 0% 95%;
 
-    --primary: 213 100% 50%;
-    --primary-foreground: 0 0% 95%;
+    --primary: 0 0% 95%;
+    --primary-foreground: 213 50% 8%;
 
     --secondary: 213 30% 20%;
     --secondary-foreground: 0 0% 95%;
@@ -63,7 +31,9 @@
 
     --border: 213 30% 25%;
     --input: 213 30% 25%;
-    --ring: 213 100% 50%;
+    --ring: 0 0% 95%;
+
+    --radius: 0.5rem;
   }
 }
 
@@ -96,31 +66,30 @@
 
 @layer components {
   .page-container {
-    @apply container max-w-4xl px-4 py-6 pb-20;
+    @apply container max-w-4xl px-4 py-6 pb-20 bg-background;
   }
   
   .card-hover {
-    @apply transition-all duration-300 hover:shadow-md hover:-translate-y-1;
+    @apply transition-all duration-300 hover:shadow-md hover:-translate-y-1 bg-card text-card-foreground;
   }
 
   .bible-verse {
-    @apply italic p-4 my-4 rounded-lg bg-blue-100/50 border-l-4 border-blue-500 text-blue-900;
+    @apply italic p-4 my-4 rounded-lg bg-blue-900/30 border-l-4 border-white/50 text-white/90;
   }
 
   .glass-effect {
-    @apply bg-white/80 backdrop-blur-sm border border-white/20 dark:bg-black/40;
+    @apply bg-white/10 backdrop-blur-sm border border-white/20;
   }
 
   .nav-item {
-    @apply flex flex-col items-center justify-center gap-1 p-2 rounded-lg transition-colors;
+    @apply flex flex-col items-center justify-center gap-1 p-2 rounded-lg transition-colors text-white/80 hover:text-white;
   }
 
   .nav-item-active {
-    @apply bg-blue-600 text-white;
+    @apply bg-white/20 text-white;
   }
 
   .button-primary {
-    @apply bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors;
+    @apply bg-white text-blue-900 px-4 py-2 rounded-lg hover:bg-white/90 transition-colors;
   }
 }
-
