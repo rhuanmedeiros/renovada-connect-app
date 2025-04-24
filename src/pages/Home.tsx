@@ -67,8 +67,8 @@ const Home = () => {
       <div className="space-y-3">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-semibold text-zinc-100">Próximos Eventos</h2>
-          <Link to="/agenda" className="text-blue-600 text-sm font-medium flex items-center">
-            <Calendar className="h-4 w-4 mr-1 bg-zinc-100" /> Ver agenda
+          <Link to="/agenda" className="text-white-600 text-sm font-medium flex items-center">
+            <Calendar className="h-4 w-4 mr-1 bg-slate-900" /> Ver agenda
           </Link>
         </div>
         
